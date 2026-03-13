@@ -9,145 +9,145 @@ ANALYTES_WHITELIST = [
     {
         "canonical_name": "hemoglobin",
         "display_name_ru": "Гемоглобин",
-        "synonyms": ["HGB", "Hb", "гемоглобин", "HB", "HGB (Hb)", "Гемоглобин (HGB)"],
+        "synonyms": ["HGB", "Hb", "гемоглобин", "HB", "HGB (Hb)", "Гемоглобин (HGB)", "Hemoglobin"],
         "default_unit": "г/л"
     },
     {
         "canonical_name": "rbc",
         "display_name_ru": "Эритроциты",
-        "synonyms": ["RBC", "эритроциты", "RBC (эритроциты)", "Красные кровяные клетки"],
+        "synonyms": ["RBC", "эритроциты", "RBC (эритроциты)", "Красные кровяные клетки", "Er", "Эр"],
         "default_unit": "10^12/л"
     },
     {
         "canonical_name": "hematocrit",
         "display_name_ru": "Гематокрит",
-        "synonyms": ["HCT", "Ht", "гематокрит", "HT", "Hematocrit"],
+        "synonyms": ["HCT", "Ht", "гематокрит", "HT", "Hematocrit", "HCT (гематокрит)"],
         "default_unit": "%"
     },
     {
         "canonical_name": "mcv",
-        "display_name_ru": "MCV (средний объем эритроцита)",
-        "synonyms": ["MCV", "Средний объем эритроцита", "Средний объем эритроцитов", "Mean corpuscular volume"],
+        "display_name_ru": "MCV",
+        "synonyms": ["MCV", "Средний объем эритроцита", "Средний объем эритроцитов", "Mean corpuscular volume", "M.C.V."],
         "default_unit": "фл"
     },
     {
         "canonical_name": "mch",
-        "display_name_ru": "MCH (среднее содержание Hb в эритроците)",
-        "synonyms": ["MCH", "Среднее содержание Hb в эритроците", "Среднее содержание гемоглобина в эритроците", "Mean corpuscular hemoglobin"],
+        "display_name_ru": "MCH",
+        "synonyms": ["MCH", "Среднее содержание Hb в эритроците", "Среднее содержание гемоглобина в эритроците", "Mean corpuscular hemoglobin", "M.C.H."],
         "default_unit": "пг"
     },
     {
         "canonical_name": "mchc",
-        "display_name_ru": "MCHC (средняя концентрация Hb в эритроцитах)",
-        "synonyms": ["MCHC", "Средняя концентрация Hb в эритроцитах", "Mean corpuscular hemoglobin concentration"],
+        "display_name_ru": "MCHC",
+        "synonyms": ["MCHC", "Средняя концентрация Hb в эритроцитах", "Mean corpuscular hemoglobin concentration", "M.C.H.C."],
         "default_unit": "г/л"
     },
     {
         "canonical_name": "rdw_cv",
-        "display_name_ru": "RDW-CV (ширина распределения эритроцитов)",
-        "synonyms": ["RDW-CV", "RDW", "RDW-C", "Ширина распределения эритроцитов", "Red cell distribution width"],
+        "display_name_ru": "RDW-CV",
+        "synonyms": ["RDW-CV", "RDW", "RDW-C", "Ширина распределения эритроцитов", "Red cell distribution width", "RDW (CV)"],
         "default_unit": "%"
     },
     {
         "canonical_name": "rdw_sd",
         "display_name_ru": "RDW-SD",
-        "synonyms": ["RDW-SD", "RDW-S"],
+        "synonyms": ["RDW-SD", "RDW-S", "RDW SD"],
         "default_unit": "фл"
     },
     {
         "canonical_name": "wbc",
         "display_name_ru": "Лейкоциты",
-        "synonyms": ["WBC", "лейкоциты", "WBC (лейкоциты)", "Белые кровяные клетки", "Leukocytes"],
+        "synonyms": ["WBC", "лейкоциты", "WBC (лейкоциты)", "Белые кровяные клетки", "Leukocytes", "Leu"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "neutrophils_percent",
         "display_name_ru": "Нейтрофилы %",
-        "synonyms": ["NEUT%", "Нейтрофилы %", "Neutrophils %", "NEUT", "Нейтрофилы (проценты)"],
+        "synonyms": ["NEUT%", "Нейтрофилы %", "Neutrophils %", "NEUT", "Нейтрофилы (проценты)", "NE", "% нейтрофилов"],
         "default_unit": "%"
     },
     {
         "canonical_name": "neutrophils_abs",
         "display_name_ru": "Нейтрофилы абс.",
-        "synonyms": ["NEUT#", "Нейтрофилы абс.", "Neutrophils abs", "Нейтрофилы абсолютное", "Нейтрофилы (абсолютное число)", "Нейтрофилы сегментоядерные"],
+        "synonyms": ["NEUT#", "Нейтрофилы абс.", "Neutrophils abs", "Нейтрофилы абсолютное", "Нейтрофилы (абсолютное число)", "Нейтрофилы сегментоядерные", "NEUT abs"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "lymphocytes_percent",
         "display_name_ru": "Лимфоциты %",
-        "synonyms": ["LYMPH%", "Лимфоциты %", "Lymphocytes %", "LYMPH", "Лимфоциты (проценты)"],
+        "synonyms": ["LYMPH%", "Лимфоциты %", "Lymphocytes %", "LYMPH", "Лимфоциты (проценты)", "LY", "% лимфоцитов"],
         "default_unit": "%"
     },
     {
         "canonical_name": "lymphocytes_abs",
         "display_name_ru": "Лимфоциты абс.",
-        "synonyms": ["LYMPH#", "Лимфоциты абс.", "Lymphocytes abs", "Лимфоциты абсолютное", "Лимфоциты (абсолютное число)"],
+        "synonyms": ["LYMPH#", "Лимфоциты абс.", "Lymphocytes abs", "Лимфоциты абсолютное", "Лимфоциты (абсолютное число)", "LYMPH abs"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "monocytes_percent",
         "display_name_ru": "Моноциты %",
-        "synonyms": ["MONO%", "Моноциты %", "Monocytes %", "MONO", "Моноциты (проценты)"],
+        "synonyms": ["MONO%", "Моноциты %", "Monocytes %", "MONO", "Моноциты (проценты)", "MO", "% моноцитов"],
         "default_unit": "%"
     },
     {
         "canonical_name": "monocytes_abs",
         "display_name_ru": "Моноциты абс.",
-        "synonyms": ["MONO#", "Моноциты абс.", "Monocytes abs", "Моноциты абсолютное", "Моноциты (абсолютное число)"],
+        "synonyms": ["MONO#", "Моноциты абс.", "Monocytes abs", "Моноциты абсолютное", "Моноциты (абсолютное число)", "MONO abs"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "eosinophils_percent",
         "display_name_ru": "Эозинофилы %",
-        "synonyms": ["EOS%", "Эозинофилы %", "Eosinophils %", "EOS", "Эозинофилы (проценты)"],
+        "synonyms": ["EOS%", "Эозинофилы %", "Eosinophils %", "EOS", "Эозинофилы (проценты)", "EO", "% эозинофилов"],
         "default_unit": "%"
     },
     {
         "canonical_name": "eosinophils_abs",
         "display_name_ru": "Эозинофилы абс.",
-        "synonyms": ["EOS#", "Эозинофилы абс.", "Eosinophils abs", "Эозинофилы абсолютное", "Эозинофилы (абсолютное число)"],
+        "synonyms": ["EOS#", "Эозинофилы абс.", "Eosinophils abs", "Эозинофилы абсолютное", "Эозинофилы (абсолютное число)", "EOS abs"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "basophils_percent",
         "display_name_ru": "Базофилы %",
-        "synonyms": ["BASO%", "Базофилы %", "Basophils %", "BASO", "Базофилы (проценты)"],
+        "synonyms": ["BASO%", "Базофилы %", "Basophils %", "BASO", "Базофилы (проценты)", "BA", "% базофилов"],
         "default_unit": "%"
     },
     {
         "canonical_name": "basophils_abs",
         "display_name_ru": "Базофилы абс.",
-        "synonyms": ["BASO#", "Базофилы абс.", "Basophils abs", "Базофилы абсолютное", "Базофилы (абсолютное число)"],
+        "synonyms": ["BASO#", "Базофилы абс.", "Basophils abs", "Базофилы абсолютное", "Базофилы (абсолютное число)", "BASO abs"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "platelets",
         "display_name_ru": "Тромбоциты",
-        "synonyms": ["PLT", "тромбоциты", "Platelets", "Тромбоциты (PLT)"],
+        "synonyms": ["PLT", "тромбоциты", "Platelets", "Тромбоциты (PLT)", "Plt"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "mpv",
-        "display_name_ru": "MPV (средний объем тромбоцитов)",
-        "synonyms": ["MPV", "Средний объем тромбоцитов", "Mean platelet volume"],
+        "display_name_ru": "MPV",
+        "synonyms": ["MPV", "Средний объем тромбоцитов", "Mean platelet volume", "M.P.V."],
         "default_unit": "фл"
     },
     {
         "canonical_name": "pdw",
-        "display_name_ru": "PDW (ширина распределения тромбоцитов)",
-        "synonyms": ["PDW", "Ширина распределения тромбоцитов", "Platelet distribution width"],
+        "display_name_ru": "PDW",
+        "synonyms": ["PDW", "Ширина распределения тромбоцитов", "Platelet distribution width", "P.D.W."],
         "default_unit": "фл"
     },
     {
         "canonical_name": "pct",
-        "display_name_ru": "PCT (тромбокрит)",
-        "synonyms": ["PCT", "Тромбокрит", "Plateletcrit"],
+        "display_name_ru": "PCT",
+        "synonyms": ["PCT", "Тромбокрит", "Plateletcrit", "P.C.T."],
         "default_unit": "%"
     },
     {
         "canonical_name": "esr",
         "display_name_ru": "СОЭ",
-        "synonyms": ["СОЭ", "ESR", "Скорость оседания эритроцитов", "по Вестергрену", "по Панченкову"],
+        "synonyms": ["СОЭ", "ESR", "Скорость оседания эритроцитов", "по Вестергрену", "по Панченкову", "Erythrocyte sedimentation rate", "РОЭ"],
         "default_unit": "мм/час"
     },
     
