@@ -4,14 +4,16 @@ services:
   # PostgreSQL - НЕ опубликован наружу (безопасно)
   db:
     image: postgres:15-alpine
+    env_file:
+      - .env.prod
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-analyses_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
-      POSTGRES_DB: ${POSTGRES_DB:-analyses}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-analyses_user}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -23,15 +25,17 @@ services:
   backend:
     build: .
     command: /app/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - .env.prod
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-analyses_user}:${POSTGRES_PASSWORD:-}@db:5432/${POSTGRES_DB:-analyses}
-      SECRET_KEY: ${SECRET_KEY:-}
-      ALGORITHM: ${ALGORITHM:-HS256}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
-      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS:-7}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://77.239.103.15}
-      LOG_LEVEL: ${LOG_LEVEL:-INFO}
-      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-20}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      SECRET_KEY: ${SECRET_KEY}
+      ALGORITHM: ${ALGORITHM}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
+      REFRESH_TOKEN_EXPIRE_DAYS: ${REFRESH_TOKEN_EXPIRE_DAYS}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      LOG_LEVEL: ${LOG_LEVEL}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB}
     depends_on:
       db:
         condition: service_healthy
