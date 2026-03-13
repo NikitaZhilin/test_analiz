@@ -1,6 +1,6 @@
 // API client с улучшенной безопасностью
-// В production используем относительный путь (/api), в dev - localhost:8000
-const BASE_URL = (import.meta as any).env?.VITE_API_URL || '/api';
+// В production используем относительный путь (пустой, т.к. nginx проксирует /api), в dev - localhost:8000
+const BASE_URL = (import.meta as any).env?.VITE_API_URL || '';
 
 let accessToken: string | null = null;
 let refreshToken: string | null = null;
