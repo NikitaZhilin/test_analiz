@@ -5,9 +5,10 @@ from decimal import Decimal
 import fitz  # PyMuPDF
 
 from app.core.analytes_whitelist import (
-    BLACKLIST_PATTERNS, 
+    BLACKLIST_PATTERNS,
     FLAG_PATTERNS,
     VALID_ANALYTE_KEYWORDS,
+    METADATA_BLACKLIST,
 )
 
 
@@ -24,16 +25,120 @@ class PDFImporter:
             re.compile(pattern, re.IGNORECASE)
             for pattern in BLACKLIST_PATTERNS
         ]
-        
+
+        self.metadata_blacklist = [
+            re.compile(pattern, re.IGNORECASE)
+            for pattern in METADATA_BLACKLIST
+        ]
+
         self.flag_patterns = {
             flag: [re.compile(p) for p in patterns]
             for flag, patterns in FLAG_PATTERNS.items()
         }
-        
+
         self.valid_keywords = [
             re.compile(keyword, re.IGNORECASE)
             for keyword in VALID_ANALYTE_KEYWORDS
         ]
+
+    def _is_metadata_line(self, text: str) -> bool:
+        """
+        Проверка: является ли строка паспортными/служебными данными.
+        Такие строки должны быть полностью исключены из preview.
+        """
+        text_lower = text.strip().lower()
+        if not text_lower:
+            return True
+        
+        # Проверяем по blacklist metadata
+        for pattern in self.metadata_blacklist:
+            if pattern.search(text_lower):
+                return True
+        
+        return False
+
+    def _is_table_header(self, text: str) -> bool:
+        """
+        Проверка: является ли строка заголовком таблицы.
+        """
+        text_lower = text.strip().lower()
+        
+        # Явные заголовки колонок
+        header_keywords = [
+            'исследование', 'результат', 'ед.', 'единицы', 'норма',
+            'референс', 'референсные', 'значения', 'комментарий',
+            'диапазон', 'примечание',
+        ]
+        
+        # Строка должна содержать хотя бы 2 ключевых слова заголовка
+        matches = sum(1 for kw in header_keywords if kw in text_lower)
+        return matches >= 2
+
+    def _has_valid_numeric_value(self, text: str) -> bool:
+        """
+        Проверка: содержит ли строка валидное числовое значение.
+        """
+        # Ищем числовые паттерны (с запятой или точкой)
+        numeric_pattern = r'[\d]+[,.][\d]+|[\d]+'
+        match = re.search(numeric_pattern, text)
+        return match is not None
+
+    def _is_valid_analyte_row(self, text: str) -> bool:
+        """
+        Проверка: является ли строка потенциальным лабораторным показателем.
+        Требования:
+        - Есть название (не слишком короткое)
+        - Есть числовое значение или текстовый результат
+        - Не служебная строка
+        """
+        text_lower = text.strip().lower()
+        
+        # Слишком короткие строки - мусор
+        if len(text_lower) < 3:
+            return False
+        
+        # Должно содержать число или текстовый результат
+        has_value = self._has_valid_numeric_value(text)
+        if not has_value:
+            # Проверяем текстовые результаты
+            text_results = ['отриц', 'не обнар', 'следы', 'см.комм', 'полож']
+            has_value = any(tr in text_lower for tr in text_results)
+        
+        if not has_value:
+            return False
+        
+        # Должно содержать название показателя (ключевое слово)
+        for keyword_pattern in self.valid_keywords:
+            if keyword_pattern.search(text_lower):
+                return True
+        
+        return False
+
+    def _filter_metadata_rows(self, lines: list[str]) -> list[str]:
+        """
+        Фильтрация строк: удаление паспортных, служебных данных и заголовков.
+        Возвращает только строки с потенциальными анализами.
+        """
+        filtered = []
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            
+            # 1. Исключаем metadata (паспортные данные)
+            if self._is_metadata_line(line):
+                continue
+            
+            # 2. Исключаем заголовки таблиц
+            if self._is_table_header(line):
+                continue
+            
+            # 3. Проверяем что это валидная строка с анализом
+            if self._is_valid_analyte_row(line):
+                filtered.append(line)
+        
+        return filtered
 
     def _is_blacklisted(self, text: str) -> bool:
         text_lower = text.strip().lower()
@@ -303,20 +408,28 @@ class PDFImporter:
         if not text.strip():
             return []
 
+        # Предфильтрация: удаляем metadata, заголовки, служебные строки
+        all_lines = text.split('\n')
+        filtered_lines = self._filter_metadata_rows(all_lines)
+
+        # Если после фильтрации ничего не осталось - пробуем парсить без фильтрации
+        if not filtered_lines:
+            filtered_lines = all_lines
+
         results = []
-        lines = text.split('\n')
-        
+
         # Определяем формат по наличию заголовка Инвитро
         is_invitro = 'исследование' in text.lower() and 'референсные' in text.lower() and 'единицы' in text.lower()
-        
-        for i, line in enumerate(lines):
+
+        for i, line in enumerate(filtered_lines):
             if is_invitro:
                 # Для Инвитро передаём следующую строку для контекста
-                next_line = lines[i + 1] if i + 1 < len(lines) else None
+                next_idx = i + 1 if i + 1 < len(filtered_lines) else None
+                next_line = filtered_lines[next_idx] if next_idx is not None else None
                 result = self._parse_invitro_line(line, next_line)
             else:
                 result = self._parse_gemotest_line(line)
-            
+
             if result:
                 results.append(result)
 
