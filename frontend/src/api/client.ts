@@ -1,5 +1,6 @@
 // API client с улучшенной безопасностью
-const BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000';
+// В production используем относительный путь (/api), в dev - localhost:8000
+const BASE_URL = (import.meta as any).env?.VITE_API_URL || '/api';
 
 let accessToken: string | null = null;
 let refreshToken: string | null = null;

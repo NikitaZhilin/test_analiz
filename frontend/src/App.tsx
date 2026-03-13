@@ -21,7 +21,8 @@ function ServerStatusBanner() {
   useEffect(() => {
     const checkServer = async () => {
       try {
-        const response = await fetch('http://localhost:8000/health');
+        // В production используем относительный путь /api/health
+        const response = await fetch('/api/health');
         if (response.ok) {
           const data = await response.json();
           setServerOk(data.status === 'ok');
@@ -61,7 +62,7 @@ function ServerStatusBanner() {
     }}>
       <span>⚠️</span>
       <strong>Backend не доступен!</strong>
-      <span>Убедитесь, что сервер запущен на http://localhost:8000</span>
+      <span>Проверьте, что сервер запущен</span>
     </div>
   );
 }

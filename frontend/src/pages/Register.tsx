@@ -41,9 +41,9 @@ export default function Register() {
       
       if (err instanceof Error) {
         const errorMsg = err.message.toLowerCase();
-        
+
         if (errorMsg.includes('network') || errorMsg.includes('fetch')) {
-          errorMessage = 'Нет соединения с сервером. Проверьте, запущен ли backend (http://localhost:8000)';
+          errorMessage = 'Нет соединения с сервером. Проверьте, запущен ли backend';
         } else if (errorMsg.includes('email') && errorMsg.includes('registered')) {
           errorMessage = 'Этот email уже зарегистрирован. Попробуйте войти.';
         } else if (errorMsg.includes('invalid') && errorMsg.includes('email')) {
