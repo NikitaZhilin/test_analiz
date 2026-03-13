@@ -1,57 +1,49 @@
 #!/bin/bash
-
-# Script for production deployment
-# Usage: ./deploy.sh
+# Production deployment script for VPS
 
 set -e
 
-echo "🚀 Starting deployment..."
+APP_DIR="/opt/analyses-app"
+ENV_FILE="$APP_DIR/backend/.env.prod"
 
-# Colors
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
+echo "=== Production Deployment Script ==="
+echo "App directory: $APP_DIR"
 
-# Check if running on server
-if [ ! -f "docker-compose.prod.yml" ]; then
-    echo -e "${RED}Error: docker-compose.prod.yml not found!${NC}"
-    echo "Please run this script from the backend directory on the production server."
+# Check if .env.prod exists
+if [ ! -f "$ENV_FILE" ]; then
+    echo "ERROR: $ENV_FILE not found!"
+    echo "Please create it from .env.prod.example first:"
+    echo "  cp $APP_DIR/backend/.env.prod.example $ENV_FILE"
+    echo "  # Then edit with real values"
     exit 1
 fi
 
-# Pull latest changes
-echo -e "${YELLOW}📦 Pulling latest changes...${NC}"
-git pull origin main
+cd "$APP_DIR"
 
-# Build and restart containers
-echo -e "${YELLOW}🔨 Building containers...${NC}"
-docker-compose -f docker-compose.prod.yml up --build -d
+# Pull latest changes (if using git)
+if [ -d ".git" ]; then
+    echo "Pulling latest changes..."
+    git pull origin main
+fi
 
-# Wait for database
-echo -e "${YELLOW}⏳ Waiting for database...${NC}"
-sleep 10
+# Load environment variables
+set -a
+source "$ENV_FILE"
+set +a
+
+# Build and start services
+echo "Building and starting services..."
+docker compose -f backend/docker-compose.prod.yml up -d --build
 
 # Run migrations
-echo -e "${YELLOW}📊 Running migrations...${NC}"
-docker-compose -f docker-compose.prod.yml exec -T backend alembic upgrade head
-
-# Seed initial data (optional)
-echo -e "${YELLOW}🌱 Seeding initial data...${NC}"
-docker-compose -f docker-compose.prod.yml exec -T backend python -m app.scripts.seed || true
+echo "Running database migrations..."
+docker compose -f backend/docker-compose.prod.yml exec -T backend alembic upgrade head
 
 # Show status
-echo -e "${GREEN}✅ Deployment complete!${NC}"
 echo ""
-echo "Service status:"
-docker-compose -f docker-compose.prod.yml ps
+echo "=== Deployment Complete ==="
+docker compose -f backend/docker-compose.prod.yml ps
 
 echo ""
-echo "Logs (last 20 lines):"
-docker-compose -f docker-compose.prod.yml logs --tail=20
-
-echo ""
-echo -e "${GREEN}🎉 Application is running!${NC}"
-echo "Frontend: http://localhost:5174"
-echo "Backend: http://localhost:8000"
-echo "API Docs: http://localhost:8000/api/docs"
+echo "Service available at: http://77.239.103.15/"
+echo "API docs: http://77.239.103.15/api/docs"

@@ -24,6 +24,7 @@ wheels/
 *.egg
 poetry.lock
 .env
+.env.prod
 .pytest_cache/
 .coverage
 htmlcov/
