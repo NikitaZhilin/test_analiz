@@ -21,8 +21,8 @@ function ServerStatusBanner() {
   useEffect(() => {
     const checkServer = async () => {
       try {
-        // В production используем относительный путь /api/health
-        const response = await fetch('/api/health');
+        // Health endpoint без префикса /api
+        const response = await fetch('/health');
         if (response.ok) {
           const data = await response.json();
           setServerOk(data.status === 'ok');
