@@ -276,7 +276,7 @@ class PDFImporter:
         line = line.strip()
         if not line or self._is_blacklisted(line):
             return None
-        
+
         # Проверяем что это не заголовок таблицы
         if 'исследование' in line.lower() and 'результат' in line.lower():
             return None
@@ -285,16 +285,20 @@ class PDFImporter:
         if 'комментарий' in line.lower():
             return None
         
+        # Проверяем что это не metadata строка (Возраст, Пол и т.д.)
+        if self._is_metadata_line(line):
+            return None
+
         # Разделяем по 2+ пробелам
         parts = re.split(r'\s{2,}', line)
         parts = [p.strip() for p in parts if p.strip()]
-        
+
         if len(parts) < 2:
             return None
-        
+
         # Первая часть - название
         analyte_raw = self._clean_analyte_name(parts[0])
-        
+
         if not self._is_valid_analyte_name(analyte_raw):
             return None
         
