@@ -175,7 +175,8 @@ def preview_import(
     return ImportPreviewResponse(
         parsed_rows=parsed_rows,
         unmatched_count=unmatched_count,
-        matched_count=matched_count
+        matched_count=matched_count,
+        filtered_out_rows_count=0  # PDFImporter уже отфильтровал metadata
     )
 
 

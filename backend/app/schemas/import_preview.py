@@ -24,6 +24,7 @@ class ImportPreviewResponse(BaseModel):
     parsed_rows: list[ImportPreviewRow]
     unmatched_count: int = 0
     matched_count: int = 0
+    filtered_out_rows_count: int = 0  # Сколько строк отфильтровано как metadata/non-analyte
 
 
 class ImportConfirmRow(BaseModel):

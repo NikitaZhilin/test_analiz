@@ -7,6 +7,7 @@ import type { ImportPreviewRow, Analyte } from '../types';
 export default function ImportPage({ profileId }: { profileId: number }) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<ImportPreviewRow[] | null>(null);
+  const [filteredOutCount, setFilteredOutCount] = useState<number>(0);
   const [analytes, setAnalytes] = useState<Analyte[]>([]);
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -52,6 +53,7 @@ export default function ImportPage({ profileId }: { profileId: number }) {
     try {
       const data = await previewImport(profileId, file);
       setPreview(data.parsed_rows);
+      setFilteredOutCount(data.filtered_out_rows_count || 0);
       setStep('preview');
 
       const analytesData = await getAnalytes();
@@ -273,6 +275,12 @@ export default function ImportPage({ profileId }: { profileId: number }) {
               <div style={{ marginBottom: '16px', padding: '12px', background: '#fff3e0', borderRadius: '4px' }}>
                 <strong>Внимание:</strong> {unmatchedRows.length} показателей не распознано.
                 Укажите соответствия для unmatched строк ниже.
+              </div>
+            )}
+
+            {filteredOutCount > 0 && (
+              <div style={{ marginBottom: '16px', padding: '8px', background: '#f5f5f5', borderRadius: '4px', fontSize: '13px', color: '#666' }}>
+                Служебные строки автоматически скрыты ({filteredOutCount})
               </div>
             )}
 
