@@ -56,13 +56,15 @@ class PDFImporter:
                 return True
         
         # Дополнительная проверка: строки начинающиеся с "возраст", "пол" и т.д.
+        # Учитываем варианты с двоеточием и без
         metadata_starts = [
             'возраст', 'пол', 'дата рождения', 'фио', 'пациент',
             'номер заказа', 'номер исследования', 'дата забора',
             'биоматериал', 'лаборатория', 'врач',
         ]
         for start in metadata_starts:
-            if text_lower.startswith(start):
+            # Проверяем начало строки (с возможным двоеточием после)
+            if text_lower.startswith(start) or text_lower.startswith(start + ':'):
                 return True
         
         return False
