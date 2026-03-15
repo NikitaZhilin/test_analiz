@@ -97,6 +97,12 @@ class AnalyteMatcher:
         # Убираем запятые в конце и лишние пробелы вокруг запятых
         name = re.sub(r'\s*,\s*', ',', name)
         name = name.rstrip(',').strip()
+        
+        # Убираем скобки с пояснениями типа (общ.число), (абс.), (микроскопия)
+        # Но сохраняем основные обозначения в скобках
+        name = re.sub(r'\s*\(общ\.?число\)\s*', ' ', name, flags=re.IGNORECASE)
+        name = re.sub(r'\s*\(абс\.?\)\s*', ' абс.', name, flags=re.IGNORECASE)
+        name = re.sub(r'\s*\(микроскопия\)\s*', ' ', name, flags=re.IGNORECASE)
 
         return ' '.join(name.split()).strip()
 

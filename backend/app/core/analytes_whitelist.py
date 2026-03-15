@@ -33,7 +33,7 @@ ANALYTES_WHITELIST = [
     {
         "canonical_name": "mch",
         "display_name_ru": "MCH",
-        "synonyms": ["MCH", "Среднее содержание Hb в эритроците", "Среднее содержание гемоглобина в эритроците", "Mean corpuscular hemoglobin", "M.C.H."],
+        "synonyms": ["MCH", "Среднее содержание Hb в эритроците", "Среднее содержание гемоглобина в эритроците", "Mean corpuscular hemoglobin", "M.C.H.", "MCH (ср. содер. Hb в эр.)"],
         "default_unit": "пг"
     },
     {
@@ -293,7 +293,7 @@ ANALYTES_WHITELIST = [
     {
         "canonical_name": "vitamin_d_total",
         "display_name_ru": "Витамин D суммарный",
-        "synonyms": ["Витамин D суммарный", "Vitamin D total", "25-OH D", "25(OH)D", "Кальциферол", "Витамин D общий"],
+        "synonyms": ["Витамин D суммарный", "Vitamin D total", "25-OH D", "25(OH)D", "Кальциферол", "Витамин D общий", "Витамин 25(ОН) D"],
         "default_unit": "нг/мл"
     },
     {
