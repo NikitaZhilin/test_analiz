@@ -93,6 +93,10 @@ class AnalyteMatcher:
         
         # Убираем двоеточия
         name = name.rstrip(':').strip()
+        
+        # Убираем запятые в конце и лишние пробелы вокруг запятых
+        name = re.sub(r'\s*,\s*', ',', name)
+        name = name.rstrip(',').strip()
 
         return ' '.join(name.split()).strip()
 

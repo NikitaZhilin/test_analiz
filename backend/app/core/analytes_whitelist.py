@@ -63,61 +63,61 @@ ANALYTES_WHITELIST = [
     {
         "canonical_name": "neutrophils_percent",
         "display_name_ru": "Нейтрофилы %",
-        "synonyms": ["NEUT%", "Нейтрофилы %", "Neutrophils %", "NEUT", "Нейтрофилы (проценты)", "NE", "% нейтрофилов"],
+        "synonyms": ["NEUT%", "Нейтрофилы %", "Neutrophils %", "NEUT", "Нейтрофилы (проценты)", "NE", "% нейтрофилов", "Нейтрофилы,%", "Нейтрофилы,%"],
         "default_unit": "%"
     },
     {
         "canonical_name": "neutrophils_abs",
         "display_name_ru": "Нейтрофилы абс.",
-        "synonyms": ["NEUT#", "Нейтрофилы абс.", "Neutrophils abs", "Нейтрофилы абсолютное", "Нейтрофилы (абсолютное число)", "Нейтрофилы сегментоядерные", "NEUT abs"],
+        "synonyms": ["NEUT#", "Нейтрофилы абс.", "Neutrophils abs", "Нейтрофилы абсолютное", "Нейтрофилы (абсолютное число)", "Нейтрофилы сегментоядерные", "NEUT abs", "Нейтрофилы,абс.", "Нейтрофилы (общ.число)"],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "lymphocytes_percent",
         "display_name_ru": "Лимфоциты %",
-        "synonyms": ["LYMPH%", "Лимфоциты %", "Lymphocytes %", "LYMPH", "Лимфоциты (проценты)", "LY", "% лимфоцитов"],
+        "synonyms": ["LYMPH%", "Лимфоциты %", "Lymphocytes %", "LYMPH", "Лимфоциты (проценты)", "LY", "% лимфоцитов", "Лимфоциты,%"],
         "default_unit": "%"
     },
     {
         "canonical_name": "lymphocytes_abs",
         "display_name_ru": "Лимфоциты абс.",
-        "synonyms": ["LYMPH#", "Лимфоциты абс.", "Lymphocytes abs", "Лимфоциты абсолютное", "Лимфоциты (абсолютное число)", "LYMPH abs"],
+        "synonyms": ["LYMPH#", "Лимфоциты абс.", "Lymphocytes abs", "Лимфоциты абсолютное", "Лимфоциты (абсолютное число)", "LYMPH abs", "Лимфоциты,абс."],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "monocytes_percent",
         "display_name_ru": "Моноциты %",
-        "synonyms": ["MONO%", "Моноциты %", "Monocytes %", "MONO", "Моноциты (проценты)", "MO", "% моноцитов"],
+        "synonyms": ["MONO%", "Моноциты %", "Monocytes %", "MONO", "Моноциты (проценты)", "MO", "% моноцитов", "Моноциты,%"],
         "default_unit": "%"
     },
     {
         "canonical_name": "monocytes_abs",
         "display_name_ru": "Моноциты абс.",
-        "synonyms": ["MONO#", "Моноциты абс.", "Monocytes abs", "Моноциты абсолютное", "Моноциты (абсолютное число)", "MONO abs"],
+        "synonyms": ["MONO#", "Моноциты абс.", "Monocytes abs", "Моноциты абсолютное", "Моноциты (абсолютное число)", "MONO abs", "Моноциты,абс."],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "eosinophils_percent",
         "display_name_ru": "Эозинофилы %",
-        "synonyms": ["EOS%", "Эозинофилы %", "Eosinophils %", "EOS", "Эозинофилы (проценты)", "EO", "% эозинофилов"],
+        "synonyms": ["EOS%", "Эозинофилы %", "Eosinophils %", "EOS", "Эозинофилы (проценты)", "EO", "% эозинофилов", "Эозинофилы,%"],
         "default_unit": "%"
     },
     {
         "canonical_name": "eosinophils_abs",
         "display_name_ru": "Эозинофилы абс.",
-        "synonyms": ["EOS#", "Эозинофилы абс.", "Eosinophils abs", "Эозинофилы абсолютное", "Эозинофилы (абсолютное число)", "EOS abs"],
+        "synonyms": ["EOS#", "Эозинофилы абс.", "Eosinophils abs", "Эозинофилы абсолютное", "Эозинофилы (абсолютное число)", "EOS abs", "Эозинофилы,абс."],
         "default_unit": "10^9/л"
     },
     {
         "canonical_name": "basophils_percent",
         "display_name_ru": "Базофилы %",
-        "synonyms": ["BASO%", "Базофилы %", "Basophils %", "BASO", "Базофилы (проценты)", "BA", "% базофилов"],
+        "synonyms": ["BASO%", "Базофилы %", "Basophils %", "BASO", "Базофилы (проценты)", "BA", "% базофилов", "Базофилы,%"],
         "default_unit": "%"
     },
     {
         "canonical_name": "basophils_abs",
         "display_name_ru": "Базофилы абс.",
-        "synonyms": ["BASO#", "Базофилы абс.", "Basophils abs", "Базофилы абсолютное", "Базофилы (абсолютное число)", "BASO abs"],
+        "synonyms": ["BASO#", "Базофилы абс.", "Basophils abs", "Базофилы абсолютное", "Базофилы (абсолютное число)", "BASO abs", "Базофилы,абс."],
         "default_unit": "10^9/л"
     },
     {

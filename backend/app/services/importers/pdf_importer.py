@@ -55,6 +55,16 @@ class PDFImporter:
             if pattern.search(text_lower):
                 return True
         
+        # Дополнительная проверка: строки начинающиеся с "возраст", "пол" и т.д.
+        metadata_starts = [
+            'возраст', 'пол', 'дата рождения', 'фио', 'пациент',
+            'номер заказа', 'номер исследования', 'дата забора',
+            'биоматериал', 'лаборатория', 'врач',
+        ]
+        for start in metadata_starts:
+            if text_lower.startswith(start):
+                return True
+        
         return False
 
     def _is_table_header(self, text: str) -> bool:
