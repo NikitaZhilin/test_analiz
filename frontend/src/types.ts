@@ -93,6 +93,8 @@ export interface ImportPreviewRow {
 export interface ImportPreviewResponse {
   parsed_rows: ImportPreviewRow[];
   unmatched_count: number;
+  matched_count: number;
+  filtered_out_rows_count: number;
 }
 
 export interface ImportConfirmRow {
