@@ -36,7 +36,6 @@
   
   /* Градиенты фона */
   --gradient-bg-main: linear-gradient(135deg, #0f1115 0%, #13161c 50%, #0f1115 100%);
-  --gradient-bg-subtle: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
   
   /* === ТЕКСТ === */
   
@@ -81,7 +80,6 @@
   --font-size-xl: 1.25rem;     /* 20px */
   --font-size-2xl: 1.5rem;     /* 24px */
   --font-size-3xl: 1.875rem;   /* 30px */
-  --font-size-4xl: 2.25rem;    /* 36px */
   
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -98,7 +96,6 @@
   
   /* === ОТСТУПЫ === */
   
-  --spacing-0: 0;
   --spacing-1: 4px;
   --spacing-2: 8px;
   --spacing-3: 12px;
