@@ -47,56 +47,76 @@ export default function Login() {
   }
 
   return (
-    <div className="auth-form">
-      <h1>Вход</h1>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>С возвращением</h1>
+          <p className="auth-subtitle">Войдите для продолжения работы</p>
+        </div>
 
-      {error && (
-        <div className="error">
-          <strong>Ошибка:</strong> {error}
-          <button
-            onClick={() => setError('')}
-            style={{ float: 'right', padding: '2px 8px', fontSize: '12px' }}
-          >
-            ✕
+        {error && (
+          <div className="error">
+            <span>{error}</span>
+            <button
+              className="error-close"
+              onClick={() => setError('')}
+              type="button"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="name@example.com"
+              required
+              disabled={loading}
+              autoComplete="email"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Пароль</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              disabled={loading}
+              autoComplete="current-password"
+            />
+          </div>
+
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Вход...
+              </>
+            ) : (
+              'Войти'
+            )}
           </button>
+        </form>
+
+        <div className="auth-footer">
+          <p>
+            Нет аккаунта?{' '}
+            <a href="/register" className="auth-link">
+              Зарегистрироваться
+            </a>
+          </p>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Введите email"
-            required
-            disabled={loading}
-            autoComplete="email"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Пароль</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Введите пароль"
-            required
-            disabled={loading}
-            autoComplete="current-password"
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Вход...' : 'Войти'}
-        </button>
-      </form>
-
-      <p style={{ marginTop: '16px', textAlign: 'center' }}>
-        Нет аккаунта? <a href="/register" style={{ color: '#2196f3' }}>Зарегистрироваться</a>
-      </p>
+      </div>
     </div>
   );
 }

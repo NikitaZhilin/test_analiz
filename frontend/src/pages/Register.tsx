@@ -35,10 +35,10 @@ export default function Register() {
       navigate('/profiles');
     } catch (err) {
       console.error('[Register Error]', err);
-      
+
       // Детализация ошибки
       let errorMessage = 'Ошибка регистрации';
-      
+
       if (err instanceof Error) {
         const errorMsg = err.message.toLowerCase();
 
@@ -52,7 +52,7 @@ export default function Register() {
           errorMessage = err.message;
         }
       }
-      
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -60,67 +60,91 @@ export default function Register() {
   }
 
   return (
-    <div className="auth-form">
-      <h1>Регистрация</h1>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Создать аккаунт</h1>
+          <p className="auth-subtitle">Заполните форму для регистрации</p>
+        </div>
 
-      {error && (
-        <div className="error">
-          <strong>Ошибка:</strong> {error}
-          <button 
-            onClick={() => setError('')} 
-            style={{ float: 'right', padding: '2px 8px', fontSize: '12px' }}
-          >
-            ✕
+        {error && (
+          <div className="error">
+            <span>{error}</span>
+            <button
+              className="error-close"
+              onClick={() => setError('')}
+              type="button"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="name@example.com"
+              required
+              disabled={loading}
+              autoComplete="email"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Пароль</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Минимум 6 символов"
+              minLength={6}
+              required
+              disabled={loading}
+              autoComplete="new-password"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Подтверждение пароля</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              placeholder="Повторите пароль"
+              required
+              disabled={loading}
+              autoComplete="new-password"
+            />
+          </div>
+
+          <button type="submit" className="auth-submit" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Регистрация...
+              </>
+            ) : (
+              'Зарегистрироваться'
+            )}
           </button>
+        </form>
+
+        <div className="auth-footer">
+          <p>
+            Уже есть аккаунт?{' '}
+            <Link to="/login" className="auth-link">
+              Войти
+            </Link>
+          </p>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            required
-            disabled={loading}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Пароль</label>
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Минимум 6 символов"
-            minLength={6}
-            required
-            disabled={loading}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Подтверждение пароля</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            placeholder="Повторите пароль"
-            required
-            disabled={loading}
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Регистрация...' : 'Зарегистрироваться'}
-        </button>
-      </form>
-
-      <p style={{ marginTop: '16px', textAlign: 'center' }}>
-        Уже есть аккаунт? <Link to="/login">Войти</Link>
-      </p>
+      </div>
     </div>
   );
 }
