@@ -69,7 +69,7 @@ export default function Login() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="test@example.com"
+            placeholder="Введите email"
             required
             disabled={loading}
             autoComplete="email"
@@ -82,7 +82,7 @@ export default function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="password123"
+            placeholder="Введите пароль"
             required
             disabled={loading}
             autoComplete="current-password"
@@ -93,16 +93,6 @@ export default function Login() {
           {loading ? 'Вход...' : 'Войти'}
         </button>
       </form>
-
-      <div style={{ marginTop: '16px', padding: '12px', background: '#f5f5f5', borderRadius: '4px', fontSize: '12px' }}>
-        <strong>Тестовые данные:</strong><br />
-        Email: test@example.com<br />
-        Пароль: password123
-      </div>
-
-      <p style={{ marginTop: '16px', textAlign: 'center', fontSize: '11px', color: '#999' }}>
-        Откройте консоль браузера (F12) для отладки
-      </p>
 
       <p style={{ marginTop: '16px', textAlign: 'center' }}>
         Нет аккаунта? <a href="/register" style={{ color: '#2196f3' }}>Зарегистрироваться</a>
