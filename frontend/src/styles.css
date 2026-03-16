@@ -263,20 +263,51 @@ label {
   border-bottom: 1px solid var(--color-border-light);
 }
 
-.header h1 {
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none !important;
+}
+
+.logo:hover {
+  text-decoration: none !important;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.logo-text {
   font-size: var(--font-size-lg);
-  color: var(--color-text-primary);
   font-weight: 600;
+  color: var(--color-text-primary);
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-.header h1 a {
-  color: inherit;
+@media (max-width: 768px) {
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .logo-text {
+    font-size: var(--font-size-base);
+  }
 }
 
-.header h1 a:hover {
-  color: var(--color-primary);
-  text-decoration: none;
+@media (max-width: 375px) {
+  .logo-text {
+    display: none;
+  }
+}
+
+.header h1 {
+  display: none; /* Устаревший элемент, заменён на Logo */
 }
 
 .header-nav {

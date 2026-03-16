@@ -13,6 +13,7 @@ import Analytes from './pages/Analytes';
 import AnalyteDetail from './pages/AnalyteDetail';
 import ImportPage from './pages/ImportPage';
 import ErrorLogViewer from './components/ErrorLogViewer';
+import Logo from './components/Logo';
 
 // Компонент для отображения статуса соединения
 function ServerStatusBanner() {
@@ -169,16 +170,14 @@ function App() {
       <ServerStatusBanner />
       {user && (
         <header className="header">
-          <h1>
-            <Link to="/profiles">Сравнение Анализов</Link>
-          </h1>
-          
+          <Logo profileId={activeProfileId || undefined} />
+
           <button className="hamburger" onClick={toggleMenu} aria-label="Меню">
             <span></span>
             <span></span>
             <span></span>
           </button>
-          
+
           <nav className={`header-nav ${menuOpen ? 'active' : ''}`}>
             {profiles.length > 0 && activeProfileId && (
               <div className="profile-switcher">
