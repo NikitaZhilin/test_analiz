@@ -44,22 +44,7 @@ function ServerStatusBanner() {
   if (serverOk) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      background: '#ffebee',
-      color: '#c62828',
-      padding: '8px 16px',
-      fontSize: '13px',
-      zIndex: 9999,
-      borderBottom: '1px solid #ef9a9a',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '8px'
-    }}>
+    <div className="server-status-banner">
       <span>⚠️</span>
       <strong>Backend не доступен!</strong>
       <span>Проверьте, что сервер запущен</span>
