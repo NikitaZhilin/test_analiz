@@ -104,10 +104,6 @@ export default function AnalyteDetail({ profileId }: { profileId: number }) {
             <h3 className="analyte-title">{data.analyte.display_name_ru}</h3>
             <div className="analyte-meta">
               <span className="meta-item">
-                <span className="meta-label">Canonical:</span>
-                <code className="canonical-name">{data.analyte.canonical_name}</code>
-              </span>
-              <span className="meta-item">
                 <span className="meta-label">Ед. изм.:</span>
                 <span className="unit-badge">{data.analyte.default_unit || '—'}</span>
               </span>

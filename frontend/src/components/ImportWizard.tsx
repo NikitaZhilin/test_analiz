@@ -234,10 +234,9 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
                 </tr>
               </thead>
               <tbody>
-                {preview.map((row, index) => {
+                {preview.map((row, _index) => {
                   const isUnmatched = !row.analyte;
                   const selectedId = selectedAnalytes[row.row_index];
-                  const selectedAnalyte = analytes.find(a => a.id === selectedId);
 
                   return (
                     <tr key={row.row_index} className={isUnmatched ? 'row-unmatched' : ''}>
