@@ -55,15 +55,10 @@ export default function Login() {
         </div>
 
         {error && (
-          <div className="error">
+          <div className="alert alert-error">
+            <span className="alert-icon">⛔</span>
             <span>{error}</span>
-            <button
-              className="error-close"
-              onClick={() => setError('')}
-              type="button"
-            >
-              ✕
-            </button>
+            <button className="alert-close" onClick={() => setError('')} type="button">✕</button>
           </div>
         )}
 

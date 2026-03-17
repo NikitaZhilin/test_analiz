@@ -30,13 +30,12 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
   async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
-    
-    // Проверка расширения
+
     if (!selectedFile.name.toLowerCase().endsWith('.pdf')) {
       setError('Поддерживается только PDF формат');
       return;
     }
-    
+
     setFile(selectedFile);
     setError('');
   }
@@ -98,7 +97,7 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
         create_new_analyte: createNewFlags[row.row_index] || false,
         analyte_name: newAnalyteNames[row.row_index] || row.analyte_raw || null,
         value: row.value,
-        unit: row.unit ?? undefined,
+        unit: row.unit || undefined,
         ref_low: row.ref_low ?? undefined,
         ref_high: row.ref_high ?? undefined,
         raw_name: row.analyte_raw ?? undefined,
@@ -115,64 +114,87 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
       onComplete(result.report_id);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ошибка подтверждения импорта');
+    } finally {
       setLoading(false);
     }
   }
 
-  const unmatchedRows = preview?.filter(row => !row.matched) || [];
+  if (step === 'confirm') {
+    return (
+      <div className="modal">
+        <div className="modal-header">
+          <div className="modal-icon">✓</div>
+          <h2>Импорт завершён!</h2>
+        </div>
+        <div className="success-message">
+          Результаты успешно добавлены в профиль.
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {step === 'upload' && (
-        <div>
-          <h2>Загрузка файла</h2>
-          <p style={{ marginBottom: '16px', color: '#666' }}>
-            Поддерживается только PDF формат.
-          </p>
+    <div className="modal import-wizard-modal">
+      <div className="modal-header">
+        <div className="modal-icon">📤</div>
+        <h2>Импорт анализов</h2>
+      </div>
 
-          <div
-            className="file-upload"
-            onClick={() => fileInputRef.current?.click()}
-          >
+      {step === 'upload' && (
+        <>
+          <div className="file-upload-zone" onClick={() => fileInputRef.current?.click()}>
             <input
               ref={fileInputRef}
               type="file"
               accept=".pdf"
               onChange={handleFileSelect}
+              className="file-upload-input"
             />
-            {file ? (
-              <div>
-                <p style={{ fontWeight: 'bold', color: '#333' }}>{file.name}</p>
-                <p style={{ fontSize: '13px', color: '#666' }}>
-                  {(file.size / 1024).toFixed(1)} КБ
-                </p>
-              </div>
-            ) : (
-              <div>
-                <p>Перетащите файл сюда или кликните для выбора</p>
-                <p style={{ fontSize: '13px', color: '#999' }}>PDF</p>
-              </div>
-            )}
+            <div className="file-upload-content">
+              <div className="file-upload-icon">📁</div>
+              {file ? (
+                <>
+                  <div className="file-name">{file.name}</div>
+                  <div className="file-size">{(file.size / 1024).toFixed(1)} КБ</div>
+                </>
+              ) : (
+                <>
+                  <div className="file-upload-text">
+                    <strong>Кликните</strong> или перетащите файл сюда
+                  </div>
+                  <div className="file-upload-hint">Поддерживается только PDF формат</div>
+                </>
+              )}
+            </div>
           </div>
 
-          {error && <div className="error" style={{ marginTop: '16px' }}>{error}</div>}
+          {error && <div className="alert alert-error">{error}</div>}
 
-          <div className="modal-actions" style={{ marginTop: '16px' }}>
-            <button onClick={onCancel} className="secondary">Отмена</button>
-            <button onClick={handleUpload} disabled={!file || loading}>
-              {loading ? 'Загрузка...' : 'Загрузить'}
+          <div className="modal-actions">
+            <button onClick={onCancel} className="button-secondary">
+              ✕ Отмена
+            </button>
+            <button onClick={handleUpload} disabled={!file || loading} className="button-primary">
+              {loading ? (
+                <>
+                  <span className="spinner"></span>
+                  Загрузка...
+                </>
+              ) : (
+                <>
+                  📤 Загрузить
+                </>
+              )}
             </button>
           </div>
-        </div>
+        </>
       )}
 
       {step === 'preview' && preview && (
-        <div>
-          <h2>Предпросмотр</h2>
-
-          <div className="grid grid-3" style={{ marginBottom: '16px' }}>
+        <>
+          <div className="form-row">
             <div className="form-group">
-              <label>Дата сдачи *</label>
+              <label>Дата сдачи</label>
               <input
                 type="date"
                 value={takenAt}
@@ -183,7 +205,7 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
               <label>Лаборатория</label>
               <input
                 type="text"
-                placeholder="Инвитро..."
+                placeholder="Инвитро, Гемотест..."
                 value={labName}
                 onChange={e => setLabName(e.target.value)}
               />
@@ -192,23 +214,19 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
               <label>Комментарий</label>
               <input
                 type="text"
+                placeholder="Плановый, контрольный..."
                 value={comment}
                 onChange={e => setComment(e.target.value)}
               />
             </div>
           </div>
 
-          {unmatchedRows.length > 0 && (
-            <div style={{ marginBottom: '16px', padding: '12px', background: '#fff3e0', borderRadius: '4px' }}>
-              <strong>Внимание:</strong> {unmatchedRows.length} показателей не распознано.
-            </div>
-          )}
+          {error && <div className="alert alert-error">{error}</div>}
 
-          <div className="import-preview">
-            <table>
+          <div className="table-responsive">
+            <table className="table import-preview-table">
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Показатель</th>
                   <th>Значение</th>
                   <th>Ед.</th>
@@ -217,29 +235,28 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
               </thead>
               <tbody>
                 {preview.map((row, index) => {
-                  const isUnmatched = !row.matched;
+                  const isUnmatched = !row.analyte;
                   const selectedId = selectedAnalytes[row.row_index];
+                  const selectedAnalyte = analytes.find(a => a.id === selectedId);
 
                   return (
-                    <tr
-                      key={row.row_index}
-                      className={isUnmatched ? 'unmatched' : ''}
-                    >
-                      <td>{index + 1}</td>
+                    <tr key={row.row_index} className={isUnmatched ? 'row-unmatched' : ''}>
                       <td>
                         {isUnmatched ? (
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <div className="unmatched-cell">
                             <input
                               type="text"
+                              className="input-sm"
                               placeholder={row.analyte_raw || 'Название'}
                               onChange={e => {
-                                handleMatchAnalyte(row.row_index, e.target.value);
-                                setNewAnalyteNames(prev => ({ ...prev, [row.row_index]: e.target.value }));
+                                const value = e.target.value;
+                                handleMatchAnalyte(row.row_index, value);
+                                setNewAnalyteNames(prev => ({ ...prev, [row.row_index]: value }));
                               }}
-                              style={{ fontSize: '12px', padding: '4px' }}
                               defaultValue={row.analyte_raw || ''}
                             />
                             <select
+                              className="select-sm"
                               value={selectedId || ''}
                               onChange={e => {
                                 const val = e.target.value;
@@ -254,7 +271,6 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
                                   }));
                                 }
                               }}
-                              style={{ fontSize: '12px', padding: '4px' }}
                             >
                               <option value="">— Выбрать —</option>
                               {analytes.map(a => (
@@ -264,18 +280,22 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
                             </select>
                           </div>
                         ) : (
-                          <span style={{ color: '#2e7d32' }}>
-                            {row.analyte?.display_name_ru || row.analyte_raw}
+                          <span className="matched-analyte">
+                            ✓ {row.analyte?.display_name_ru || row.analyte_raw}
                           </span>
                         )}
                       </td>
-                      <td>{row.value}</td>
-                      <td>{row.unit || '—'}</td>
                       <td>
-                        {row.matched || selectedId ? (
-                          <span className="badge badge-normal">OK</span>
+                        <strong>{row.value.toFixed(2)}</strong>
+                      </td>
+                      <td>
+                        <span className="unit-badge">{row.unit || '—'}</span>
+                      </td>
+                      <td>
+                        {row.analyte ? (
+                          <span className="badge badge-success">✓ OK</span>
                         ) : (
-                          <span className="badge badge-low">Требует выбора</span>
+                          <span className="badge badge-warning">⚠️ Выбор</span>
                         )}
                       </td>
                     </tr>
@@ -285,21 +305,26 @@ export default function ImportWizard({ profileId, onComplete, onCancel }: Import
             </table>
           </div>
 
-          {error && <div className="error" style={{ marginTop: '16px' }}>{error}</div>}
+          {error && <div className="alert alert-error">{error}</div>}
 
-          <div className="modal-actions" style={{ marginTop: '16px' }}>
-            <button onClick={onCancel} className="secondary">Отмена</button>
-            <button onClick={handleConfirm} disabled={loading}>
-              {loading ? 'Импорт...' : `Импортировать ${preview.length} строк`}
+          <div className="modal-actions">
+            <button onClick={onCancel} className="button-secondary">
+              ✕ Отмена
+            </button>
+            <button onClick={handleConfirm} disabled={loading} className="button-primary">
+              {loading ? (
+                <>
+                  <span className="spinner"></span>
+                  Импорт...
+                </>
+              ) : (
+                <>
+                  ✓ Импортировать {preview.length} строк
+                </>
+              )}
             </button>
           </div>
-        </div>
-      )}
-
-      {step === 'confirm' && (
-        <div className="success">
-          <h3>Импорт успешно завершён!</h3>
-        </div>
+        </>
       )}
     </div>
   );

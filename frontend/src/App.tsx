@@ -152,7 +152,12 @@ function App() {
   };
 
   if (loading) {
-    return <div className="loading">Загрузка...</div>;
+    return (
+      <div className="loading-with-spinner">
+        <span className="spinner-large"></span>
+        <p>Загрузка...</p>
+      </div>
+    );
   }
 
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
@@ -193,7 +198,9 @@ function App() {
             <Link to={`/profiles/${activeProfileId}/reports`} onClick={() => setMenuOpen(false)}>Анализы</Link>
             <Link to={`/profiles/${activeProfileId}/analytes`} onClick={() => setMenuOpen(false)}>Показатели</Link>
             <Link to={`/profiles/${activeProfileId}/import`} onClick={() => setMenuOpen(false)}>Импорт</Link>
-            <button onClick={handleLogout} className="secondary">Выйти</button>
+            <button onClick={handleLogout} className="button-secondary">
+              🚪 Выйти
+            </button>
           </nav>
         </header>
       )}
